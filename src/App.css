@@ -1,0 +1,13 @@
+.ant-layout-header {
+  display: flex;
+}
+
+.ant-menu {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.h100 {
+  min-height: calc(100vh - 64px);
+}
