@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {useState} from 'react';
 import {Button, DatePicker, Form, Input, Select} from "antd";
 import {Option} from "antd/es/mentions";
 import {useTypedSelector} from "../hooks/useTypedSelector";
@@ -8,7 +8,11 @@ import {formatData} from "../utils/data";
 import {useActions} from "../hooks/useActions";
 
 
-const EventForm: FC = () => {
+// interface propsTypes  {
+//   handleCancel?: () => void;
+// }
+
+const EventForm:React.FC = (props) => {
 
   const [event, setEvent] = useState({
     author: '',
@@ -19,6 +23,7 @@ const EventForm: FC = () => {
 
   const quests = useTypedSelector(state => state.eventReducer.guests)
   const username = useTypedSelector(state => state.authReducer.user.username)
+  const [form] = Form.useForm();
 
   const {createEvent} = useActions()
 
@@ -30,6 +35,7 @@ const EventForm: FC = () => {
 
   const submit = () => {
     createEvent({...event, author: username})
+    form.resetFields()
   }
 
   return (
@@ -41,6 +47,7 @@ const EventForm: FC = () => {
         initialValues={{ remember: true }}
         autoComplete="off"
         onFinish={submit}
+        form={form}
       >
         <Form.Item
           label="Дата события"

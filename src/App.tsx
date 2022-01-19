@@ -13,6 +13,7 @@ const App:FC = () => {
       setAuth(true)
     }
   }, [])
+
   return (
     <Layout>
       <Navbar />
