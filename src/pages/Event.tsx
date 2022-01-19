@@ -1,5 +1,4 @@
-import React, { Component , FC} from 'react'
-import { connect } from 'react-redux'
+import React, { FC} from 'react'
 
 const Event:FC = () => {
     return (
@@ -10,13 +9,3 @@ const Event:FC = () => {
 }
 
 export default Event
-
-// const mapStateToProps = (state) => ({
-  
-// })
-
-// const mapDispatchToProps = {
-  
-// }
-
-// export default connect(mapStateToProps, mapDispatchToProps)(Login)

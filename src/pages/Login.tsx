@@ -1,7 +1,6 @@
-import React, { Component , FC} from 'react'
-import { connect } from 'react-redux'
-import {Layout, Row} from "antd";
-import LoginForm from "../components/LoginForm";
+import React, { FC } from 'react'
+import {Card, Layout, Row} from "antd"
+import LoginForm from "../components/LoginForm"
 
 const Login:FC = () => {
     return (
@@ -11,19 +10,12 @@ const Login:FC = () => {
           justify={"center"}
           align={"middle"}
         >
-            <LoginForm/>
+            <Card>
+                <LoginForm/>
+            </Card>
         </Row>
       </Layout>
     )
 }
 
 export default Login
-// const mapStateToProps = (state) => ({
-  
-// })
-
-// const mapDispatchToProps = {
-  
-// }
-
-// export default connect(mapStateToProps, mapDispatchToProps)(Login)
