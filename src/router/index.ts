@@ -18,20 +18,12 @@ export const publicRoutes:IRoute[] = [
     {
         path: RouteNames.LOGIN,
         component: Login
-    },
-    // {
-    //     path:RouteNames.NOTFOUND,
-    //     component: NotFound
-    // }
+    }
 ]
 
 export const privateRoutes:IRoute[] = [
     {
         path: RouteNames.EVENT,
         component: Event
-    },
-    {
-        path:RouteNames.NOTFOUND,
-        component: NotFound
     }
 ]

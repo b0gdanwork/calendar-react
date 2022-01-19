@@ -15,7 +15,7 @@ const AppRoute:FC = () => {
                     element={<route.component />}
                 />
             )}
-            {/*<Route path="*" element={<Navigate replace to={RouteNames.EVENT} />} />*/}
+            <Route path="*" element={<Navigate replace to={RouteNames.EVENT} />} />
         </Routes> :
         <Routes>
             {publicRoutes.map(route =>

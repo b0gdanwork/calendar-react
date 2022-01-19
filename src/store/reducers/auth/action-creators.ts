@@ -37,11 +37,15 @@ export const AuthActionCreators = {
       dispatch(AuthActionCreators.setError("Ошибка авторизации, попробуйте позже"))
     }
   },
-  logout: ()=> async (dispatch: AppDispatch) => {
+  logout: ()=> (dispatch: AppDispatch) => {
+    console.log('logout')
     try {
-
-    } catch {
-
+      localStorage.removeItem('auth')
+      localStorage.removeItem('username')
+      dispatch(AuthActionCreators.setUser({} as IUser))
+      dispatch(AuthActionCreators.setAuth(false))
+    } catch (e) {
+      dispatch(AuthActionCreators.setError("Не смогли выйти"))
     }
   }
 }

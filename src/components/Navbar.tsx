@@ -1,25 +1,33 @@
 import React, {FC} from 'react';
-import {Layout, Row, Menu} from "antd";
-import {useNavigate} from "react-router-dom";
-import {useSelector} from "react-redux";
+import {Layout, Menu} from "antd";
 import {useTypedSelector} from "../hooks/useTypedSelector";
+import {useActions} from "../hooks/useActions";
 
 const Navbar:FC = () => {
-  const router = useNavigate()
-  const auth = useTypedSelector(state => state.authReducer.auth)
+
+  const {auth, user} = useTypedSelector(state => state.authReducer)
+  const {logout} = useActions()
+
+  const logoutClick = () => {
+    logout()
+  }
+
   return (
     <Layout.Header>
         { auth ?
           <>
             <div style={{color: 'white'}}>
-              Богдан4ик
+              {user.username}
             </div>
             <Menu
               mode="horizontal"
               theme="dark"
               selectable={false}
             >
-              <Menu.Item>Выйти</Menu.Item>
+              <Menu.Item
+                key={0}
+                onClick={logoutClick}
+              >Выйти</Menu.Item>
             </Menu>
           </>
           :
@@ -29,7 +37,9 @@ const Navbar:FC = () => {
               mode="horizontal"
               selectable={false}
             >
-              <Menu.Item>Войти</Menu.Item>
+              <Menu.Item
+                key={1}
+              >Войти</Menu.Item>
             </Menu>
           </>
 

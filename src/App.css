@@ -2,6 +2,14 @@
   display: flex;
 }
 
+.ant-layout {
+  width: 100vw;
+}
+
+.ant-row {
+  overflow: hidden;
+}
+
 .ant-menu {
   flex: 1;
   display: flex;
