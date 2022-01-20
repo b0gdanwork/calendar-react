@@ -13,7 +13,6 @@ export const EventActionCreators = {
       const response = await axios.get("./users.json")
       dispatch(EventActionCreators.setGuests(response.data))
     } catch (e) {
-
     }
   },
   createEvent: (event:IEvent)=> async (dispatch: AppDispatch) => {

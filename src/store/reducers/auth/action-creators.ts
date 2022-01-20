@@ -10,9 +10,7 @@ export const AuthActionCreators = {
   setLoading: (loading:boolean):SetIsLoadingAction=>({type: AuthActionEnum.SET_IS_LOADING, payload:loading}),
   login: (username: string, password:string)=> async (dispatch: AppDispatch) => {
     try {
-
       setTimeout(async ()=>{
-
         dispatch(AuthActionCreators.setLoading(true))
         const mockUsers = await axios.get("./users.json")
         const dataResponse: [IUser] = mockUsers.data

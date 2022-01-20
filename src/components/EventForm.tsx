@@ -1,16 +1,19 @@
 import React, {useState} from 'react';
-import {Button, DatePicker, Form, Input, Select} from "antd";
+import {Button, Checkbox, DatePicker, Form, Input, Select} from "antd";
 import {Option} from "antd/es/mentions";
 import {useTypedSelector} from "../hooks/useTypedSelector";
 import {IEvent} from "../models/IEvent";
 import {Moment} from "moment";
 import {formatData} from "../utils/data";
 import {useActions} from "../hooks/useActions";
+import {uid} from "../utils/unicId";
 
 
 interface propsTypes  {
   selectedValue: Moment
 }
+
+type AllOptionCheckType = 'low'| 'normal' | 'high'
 
 const EventForm:React.FC<propsTypes> = (props) => {
 
@@ -18,8 +21,24 @@ const EventForm:React.FC<propsTypes> = (props) => {
     author: '',
     data: '',
     description: '',
-    quest: ''
+    quest: '',
+    importance: 'normal'
   } as  IEvent)
+
+  const CheckboxGroup = Checkbox.Group;
+  const optionImportance:AllOptionCheckType[] = ['low', 'normal', 'high']
+  const [checkedList, setCheckedList] = React.useState(['normal'] as AllOptionCheckType[]);
+
+  const CheckboxGroupChange = (list: any):void => {
+    let newList = list as AllOptionCheckType[]
+    let missing = newList.filter(item => checkedList.indexOf(item) < 0);
+    setCheckedList(missing)
+    console.log(missing)
+    setEvent({
+      ...event,
+      importance: missing.length ? missing[0] : null
+    })
+  }
 
   const quests = useTypedSelector(state => state.eventReducer.guests)
   const username = useTypedSelector(state => state.authReducer.user.username)
@@ -29,12 +48,21 @@ const EventForm:React.FC<propsTypes> = (props) => {
 
   const selectData = (data:Moment | null)  => {
     if (data) {
-      setEvent({...event, data:formatData(data.toDate())})
+      setEvent({
+        ...event,
+        data:formatData(data.toDate()),
+      })
     }
   }
 
   const submit = () => {
-    createEvent({...event, author: username})
+    const newEvent = {
+      ...event,
+      id: uid(),
+      author: username
+    }
+    console.log(newEvent)
+    // createEvent(newEvent)
     form.resetFields()
   }
 
@@ -54,32 +82,28 @@ const EventForm:React.FC<propsTypes> = (props) => {
           name="data"
           rules={[{ required: true, message: 'Обязательное поле' }]}
         >
-
           <DatePicker
             defaultValue={props.selectedValue}
             onChange={selectData}
           />
-
         </Form.Item>
+
         <Form.Item
           label="Название события"
           name="description"
           rules={[{ required: true, message: 'Обязательное поле' }]}
         >
-
           <Input
             placeholder="Название события"
             value={event.description}
             onChange={(e)=>{setEvent({...event, description: e.target.value})}}
           />
-
         </Form.Item>
+
         <Form.Item
           label="Выберите гостя:"
           name="quest"
-          rules={[{ required: false, message: 'Обязательное поле' }]}
         >
-
           <Select
             defaultValue="Выберите гостя"
             onChange={(quest:string) => setEvent({...event, quest})}
@@ -91,6 +115,21 @@ const EventForm:React.FC<propsTypes> = (props) => {
           </Select>
 
         </Form.Item>
+
+        <Form.Item
+          label="Выберите срочность:"
+          name="importance"
+          valuePropName="checked"
+          rules={[{ required: true, message: 'Выберите срочность' }]}
+        >
+          <CheckboxGroup
+            options={optionImportance}
+            value={checkedList}
+            defaultValue={['normal']}
+            onChange={CheckboxGroupChange}
+          />
+        </Form.Item>
+
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
 
           <Button
@@ -101,6 +140,7 @@ const EventForm:React.FC<propsTypes> = (props) => {
           </Button>
 
         </Form.Item>
+
       </Form>
     </>
   );

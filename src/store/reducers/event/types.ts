@@ -4,7 +4,7 @@ import {IEvent} from "../../../models/IEvent";
 export interface EventState {
   guests: IUser[],
   events: IEvent[],
-  isLoading?: boolean
+  isLoading: boolean,
 }
 
 export enum EventActionsEnum  {
