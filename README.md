@@ -1,3 +1,9 @@
+# В разработке
+
+# Стек: 
+raact + redux + redux-thunk + axios + ant disign + typescript
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
