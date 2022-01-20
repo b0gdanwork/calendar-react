@@ -10,6 +10,7 @@ export interface EventState {
 export enum EventActionsEnum  {
   SET_QUESTS = "SET_QUESTS",
   SET_EVENTS = "SET_EVENTS",
+  SET_IS_LOADING = "events/SET_IS_LOADING"
 }
 
 export interface setGuestsAction  {
@@ -22,4 +23,9 @@ export interface setEventsAction  {
   payload: IEvent[],
 }
 
-export type eventsActions = setGuestsAction | setEventsAction
+export interface eventSetIsLoadingAction  {
+  type: EventActionsEnum.SET_IS_LOADING,
+  payload: boolean,
+}
+
+export type eventsActions = setGuestsAction | setEventsAction | eventSetIsLoadingAction

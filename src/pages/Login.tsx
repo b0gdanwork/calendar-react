@@ -1,6 +1,7 @@
 import React, {FC, useCallback, useEffect} from 'react'
 import {Card, Layout, Row} from "antd"
 import LoginForm from "../components/LoginForm"
+import FooterComponent from "../components/FooterComponent";
 
 
 const Login:FC = () => {

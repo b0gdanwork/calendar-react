@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import {Layout} from "antd";
 import {useActions} from "./hooks/useActions";
 import {IUser} from "./models/IUser";
+import FooterComponent from "./components/FooterComponent";
 
 const App:FC = () => {
   const {setAuth, setUser} = useActions()
@@ -20,6 +21,7 @@ const App:FC = () => {
       <Layout.Content>
         <AppRoute />
       </Layout.Content>
+      <FooterComponent />
     </Layout>
   )
 }

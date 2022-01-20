@@ -8,11 +8,11 @@ import {formatData} from "../utils/data";
 import {useActions} from "../hooks/useActions";
 
 
-// interface propsTypes  {
-//   handleCancel?: () => void;
-// }
+interface propsTypes  {
+  selectedValue: Moment
+}
 
-const EventForm:React.FC = (props) => {
+const EventForm:React.FC<propsTypes> = (props) => {
 
   const [event, setEvent] = useState({
     author: '',
@@ -54,43 +54,52 @@ const EventForm:React.FC = (props) => {
           name="data"
           rules={[{ required: true, message: 'Обязательное поле' }]}
         >
+
           <DatePicker
+            defaultValue={props.selectedValue}
             onChange={selectData}
           />
-        </Form.Item>
 
+        </Form.Item>
         <Form.Item
           label="Название события"
           name="description"
           rules={[{ required: true, message: 'Обязательное поле' }]}
         >
+
           <Input
+            placeholder="Название события"
             value={event.description}
             onChange={(e)=>{setEvent({...event, description: e.target.value})}}
           />
-        </Form.Item>
 
+        </Form.Item>
         <Form.Item
           label="Выберите гостя:"
           name="quest"
-          rules={[{ required: true, message: 'Обязательное поле' }]}
+          rules={[{ required: false, message: 'Обязательное поле' }]}
         >
+
           <Select
             defaultValue="Выберите гостя"
             onChange={(quest:string) => setEvent({...event, quest})}
           >
             {quests.map((quest)=>{
+              if (username == quest.username ) return
               return <Option key={quest.username} value={quest.username}>{quest.username}</Option>
             })}
           </Select>
+
         </Form.Item>
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+
           <Button
             type="primary"
             htmlType="submit"
           >
             Создать
           </Button>
+
         </Form.Item>
       </Form>
     </>

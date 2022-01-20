@@ -10,6 +10,9 @@ export function eventReducer (state:EventState = initialState, action:eventsActi
   switch (action.type) {
     case EventActionsEnum.SET_EVENTS:
       return {...state, events: action.payload}
+
+    case EventActionsEnum.SET_IS_LOADING:
+      return {...state, isLoading: action.payload}
     
     case EventActionsEnum.SET_QUESTS:
       return {...state, guests: action.payload}

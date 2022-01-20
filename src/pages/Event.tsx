@@ -13,11 +13,9 @@ const Event:FC = () => {
     }, [])
 
     return (
-      <div>
         <EventCalendar
           events={events}
         />
-      </div>
     )
 }
 

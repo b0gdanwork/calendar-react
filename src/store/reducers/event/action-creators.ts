@@ -5,6 +5,7 @@ import {AppDispatch} from "../../index";
 import axios from "axios";
 
 export const EventActionCreators = {
+  setLoading: (isLoading: boolean): eventsActions => ({type: EventActionsEnum.SET_IS_LOADING, payload: isLoading}),
   setGuests: (guests: [IUser]): eventsActions => ({type: EventActionsEnum.SET_QUESTS, payload: guests}),
   setEvents: (events: IEvent[]): eventsActions => ({type: EventActionsEnum.SET_EVENTS, payload: events}),
   fetchGuests: ()=> async (dispatch: AppDispatch) => {
@@ -17,13 +18,17 @@ export const EventActionCreators = {
   },
   createEvent: (event:IEvent)=> async (dispatch: AppDispatch) => {
     try {
-      const events = localStorage.getItem("events") || '[]'
-      const json = JSON.parse(events) as IEvent[]
-      json.push(event)
-      dispatch(EventActionCreators.setEvents(json))
-      localStorage.setItem('events', JSON.stringify(json))
+      dispatch(EventActionCreators.setLoading(true))
+      setTimeout(()=>{
+        const events = localStorage.getItem("events") || '[]'
+        const json = JSON.parse(events) as IEvent[]
+        json.push(event)
+        dispatch(EventActionCreators.setEvents(json))
+        localStorage.setItem('events', JSON.stringify(json))
+      }, 1500)
+      dispatch(EventActionCreators.setLoading(false))
     } catch (e) {
-
+      console.error(e)
     }
   },
   fetchEvent: (username:string)=> async (dispatch: AppDispatch) => {
@@ -33,7 +38,7 @@ export const EventActionCreators = {
       const currentUserEvents = json.filter(ev=> ev.author === username || ev.quest === username)
       dispatch(EventActionCreators.setEvents(currentUserEvents))
     } catch (e) {
-      console.log(e)
+      console.error(e)
     }
   },
 
