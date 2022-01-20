@@ -3,7 +3,7 @@ import {Button, Checkbox, DatePicker, Form, Input, Select} from "antd";
 import {Option} from "antd/es/mentions";
 import {useTypedSelector} from "../hooks/useTypedSelector";
 import {IEvent} from "../models/IEvent";
-import {Moment} from "moment";
+import moment, {Moment} from "moment";
 import {formatData} from "../utils/data";
 import {useActions} from "../hooks/useActions";
 import {uid} from "../utils/unicId";
@@ -19,7 +19,7 @@ const EventForm:React.FC<propsTypes> = (props) => {
 
   const [event, setEvent] = useState({
     author: '',
-    data: '',
+    data: formatData(props.selectedValue.toDate()),
     description: '',
     quest: '',
     importance: 'normal'
@@ -42,6 +42,7 @@ const EventForm:React.FC<propsTypes> = (props) => {
 
   const quests = useTypedSelector(state => state.eventReducer.guests)
   const username = useTypedSelector(state => state.authReducer.user.username)
+  const isLoading = useTypedSelector(state => state.eventReducer.isLoading)
   const [form] = Form.useForm();
 
   const {createEvent} = useActions()
@@ -61,8 +62,7 @@ const EventForm:React.FC<propsTypes> = (props) => {
       id: uid(),
       author: username
     }
-    console.log(newEvent)
-    // createEvent(newEvent)
+    createEvent(newEvent)
     form.resetFields()
   }
 
@@ -80,7 +80,7 @@ const EventForm:React.FC<propsTypes> = (props) => {
         <Form.Item
           label="Дата события"
           name="data"
-          rules={[{ required: true, message: 'Обязательное поле' }]}
+          rules={[{ min: 1, message: 'Обязательное поле' }]}
         >
           <DatePicker
             defaultValue={props.selectedValue}
@@ -125,7 +125,7 @@ const EventForm:React.FC<propsTypes> = (props) => {
           <CheckboxGroup
             options={optionImportance}
             value={checkedList}
-            defaultValue={['normal']}
+            defaultValue={[]}
             onChange={CheckboxGroupChange}
           />
         </Form.Item>
@@ -135,6 +135,7 @@ const EventForm:React.FC<propsTypes> = (props) => {
           <Button
             type="primary"
             htmlType="submit"
+            loading={isLoading}
           >
             Создать
           </Button>

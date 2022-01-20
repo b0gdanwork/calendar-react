@@ -24,8 +24,8 @@ export const EventActionCreators = {
         json.push(event)
         dispatch(EventActionCreators.setEvents(json))
         localStorage.setItem('events', JSON.stringify(json))
+        dispatch(EventActionCreators.setLoading(false))
       }, 1500)
-      dispatch(EventActionCreators.setLoading(false))
     } catch (e) {
       console.error(e)
     }

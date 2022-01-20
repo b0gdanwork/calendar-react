@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Alert, Button, Calendar, Divider, Layout, Modal, Row} from "antd";
+import {Alert, Badge, Button, Calendar, Divider, Layout, Modal, Row} from "antd";
 import {IEvent} from "../models/IEvent";
 import EventForm from "./EventForm";
 import moment, {Moment} from "moment";
@@ -8,6 +8,8 @@ import {formatData} from "../utils/data";
 interface EventCalendar {
   events: IEvent[]
 }
+
+type AllOptionCheckType = 'low'| 'normal' | 'high' | null
 
 const EventCalendar = (props:EventCalendar) => {
 
@@ -22,16 +24,28 @@ const EventCalendar = (props:EventCalendar) => {
     const formatedData = formatData(value.toDate())
     const currentDayEvents = props.events.filter(ev=>ev.data === formatedData)
 
+    const getStatus = (item:AllOptionCheckType) => {
+      if (item == "high") {
+        return "error"
+      }
+      if (item == "normal") {
+        return "warning"
+      }
+      if (item == "low") {
+        return "error"
+      }
+    }
+
     return (
-      <div>
+      <ul className={'events'}>
         {
           currentDayEvents.map((ev, index)=>{
-            return <div key={index}>
-              {ev.description}
-            </div>
+            return <li key={index} >
+              <Badge status={getStatus(ev.importance)} text={ev.description} />
+            </li>
           })
         }
-      </div>
+      </ul>
     );
   }
 

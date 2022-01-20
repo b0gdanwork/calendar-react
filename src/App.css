@@ -7,6 +7,12 @@
   min-height: 100vh;
 }
 
+.events {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
 .ant-row {
   overflow: hidden;
 }
